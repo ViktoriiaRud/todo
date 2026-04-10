@@ -1,13 +1,26 @@
 import { useState } from "react";
-import "./App.css";
-import type { MyTodo } from "./types/my-todo";
+import { TodoInput } from "./components/TodoInput";
+import type { Todo } from "./types/todo";
 
 function App() {
-	const [todos, setTodos] = useState<MyTodo[]>([]);
+	const [todos, setTodos] = useState<Todo[]>([]);
+
+	const addTodo = (text: string) => {
+		const newTodo: Todo = {
+			id: crypto.randomUUID(),
+			text,
+			completed: false,
+			createdAt: new Date(),
+		};
+
+		setTodos((prev) => [...prev, newTodo]);
+	};
 
 	return (
 		<>
-			<div>ToDo App</div>
+			<div>
+				<TodoInput onAdd={addTodo} />
+			</div>
 		</>
 	);
 }
